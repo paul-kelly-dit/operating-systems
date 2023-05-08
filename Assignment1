@@ -1,0 +1,62 @@
+$ git commit -m "Patrick Fronda Assignment 1"
+
+menu=("List files" "Show free disk space" "Show system path" "Display command history" "Backup files" "Exit")
+
+while true
+do echo -e "\nPlease select your choice:\n"
+    select choice in "${menu[@]}"
+    do
+        case $choice in
+            "List files")
+                echo -e "\nListing files in current directory..\n"
+                ls
+                break
+                ;;
+            "Show free disk space")
+                echo -e "\nFree disk space available\n"
+                df -h
+                break
+                ;;
+            "Show system path")
+                echo -e "\nShowing system path\n"
+                pwd
+                break
+                ;;
+            "Display command history")
+                echo -e "\nThis is the command history\n"
+                history
+                break
+                ;;
+            "Backup files")
+                echo -e "\nPlease enter the name of the directory you want to backup:\n"
+                read dirname
+
+                if [ -d "$dirname" ]; then
+                    backup_dir="BackupFolder"
+
+                    if [ ! -d "$backup_dir" ]; then
+                        echo -e "\nAdding to new backup directory..\n"
+                        mkdir "$backup_dir"
+
+                    else
+                        echo -e "\nThis directory already exists.\n"
+                    fi
+
+                    echo -e "Backing up contents..\n"
+                    cp -r "$dirname" "./$backup_dir"
+
+                    echo -e "\nContents of backup directory:\n"
+                    ls BackupFolder
+                
+                else
+                    echo -e "\nThis directory does not exist..\n"
+                fi
+                break
+                ;;
+            "Exit")
+                echo -e "\nThank you!\n"
+                exit
+                break;;
+        esac
+    done
+done
